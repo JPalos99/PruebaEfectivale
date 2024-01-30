@@ -51,7 +51,7 @@ public class ClineteController {
     @GetMapping("/form/{idCliente}")
     public String Form(@PathVariable int idCliente, Model model) {
         RestTemplate restTemplate = new RestTemplate();
-
+        
         if (idCliente == 0) {
             model.addAttribute("cliente", new Cliente());
             return "FormularioCliente";
@@ -78,6 +78,7 @@ public class ClineteController {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
+        
         String apiUrl = "http://localhost:8080/ClienteApi/From";
         HttpEntity<Cliente> request
                 = new HttpEntity<Cliente>(cliente, headers);
@@ -89,6 +90,7 @@ public class ClineteController {
         }
         );
         return "redirect:/Cliente/listado";
+        
     }
 
     @GetMapping("/EliminarCliente/{idcliente}")

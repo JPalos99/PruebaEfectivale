@@ -48,9 +48,10 @@ public class ClienteRestController {
 
     @GetMapping("/Add&Update/{id}")
     public ResponseEntity<Cliente> obtenerAlumnoPorId(@PathVariable int id) {
+        System.out.println("id"+id);
         Optional<Cliente> clienteOptional = ClienteService.GetAll(id);
-        Cliente cliente =clienteOptional.get();
-        if (cliente != null) {
+        Cliente cliente = clienteOptional.get();
+        if (cliente == null) {
 
             return new ResponseEntity<>(new Cliente(), HttpStatus.OK);
         } else {
@@ -60,6 +61,7 @@ public class ClienteRestController {
 
     @PostMapping("/From")
     public ResponseEntity<Cliente> Form(@RequestBody Cliente cliente) {
+        
         if (cliente.getClienteid() == 0) {
             ClienteService.agregar(cliente);
             if (cliente == null) {

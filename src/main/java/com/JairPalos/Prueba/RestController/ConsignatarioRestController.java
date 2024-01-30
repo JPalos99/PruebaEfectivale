@@ -51,7 +51,7 @@ public class ConsignatarioRestController {
     public ResponseEntity<Consignatario> obtenerAlumnoPorId(@PathVariable int id) {
         Optional<Consignatario> consignatarioOptional = ConsignatarioService.GetAll(id);
         Consignatario consignatario =consignatarioOptional.get();
-        if (consignatario != null) {
+        if (consignatario == null) {
 
             return new ResponseEntity<>(new Consignatario(), HttpStatus.OK);
         } else {
@@ -83,6 +83,7 @@ public class ConsignatarioRestController {
     @GetMapping("/elimina/{id}")
     public Map<String, Integer> Delete(@PathVariable int id) {
         Map<String, Integer> map = new HashMap<>();
+        
         ConsignatarioService.eliminar(id);
         map.put("Se elimino el  consignatario con el id: ", id);
         return map;

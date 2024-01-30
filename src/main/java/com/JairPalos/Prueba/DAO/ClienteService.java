@@ -37,10 +37,10 @@ public class ClienteService {
  
      
     public void agregar(Cliente cliente) {
-        ServiceCliente.ClienteAdd(cliente.isClienteactivo(), cliente.getClientenombre(), cliente.getClientefechacreacion(),cliente.getClientefechamodificacion());
+        ServiceCliente.ClienteAdd(cliente.isClienteactivo(), cliente.getClientenombre());
     }
     public void actualizar(Cliente cliente) {
-        ServiceCliente.ClienteUpdate(cliente.getClienteid(),cliente.isClienteactivo(), cliente.getClientenombre(), cliente.getClientefechacreacion(),cliente.getClientefechamodificacion());
+        ServiceCliente.ClienteUpdate(cliente.getClienteid(),cliente.isClienteactivo(), cliente.getClientenombre());
     }
     
     public void eliminar(int clienteid){

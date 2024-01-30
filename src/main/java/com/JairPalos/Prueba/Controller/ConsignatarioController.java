@@ -5,6 +5,7 @@
 package com.JairPalos.Prueba.Controller;
 
 import com.JairPalos.Prueba.DAO.ConsignatarioService;
+import com.JairPalos.Prueba.JPA.Cliente;
 import com.JairPalos.Prueba.JPA.Consignatario;
 
 import java.util.List;
@@ -49,6 +50,8 @@ public class ConsignatarioController {
         List<Consignatario> consignatarios = response.getBody();
         model.addAttribute("consignatarios", consignatarios);
         model.addAttribute("consignatario", new Consignatario());
+        
+        
         return "PaginaConsignatario";
     }
 
@@ -56,9 +59,22 @@ public class ConsignatarioController {
     @GetMapping("/form/{idConsignatario}")
     public String Form(@PathVariable int idConsignatario, Model model) {
         RestTemplate restTemplate = new RestTemplate();
+        RestTemplate restTemplateCliente = new RestTemplate();
+        String apiUrlcliente = "http://localhost:8080/ClienteApi/Listado";
+        ResponseEntity<List<Cliente>> responseCliente = restTemplateCliente.exchange(
+                apiUrlcliente,
+                HttpMethod.GET,
+                null,
+                new ParameterizedTypeReference<List<Cliente>>() {
+        }
+        );
+        List<Cliente> clientes = responseCliente.getBody();
+        
+        
 
         if (idConsignatario == 0) {
             model.addAttribute("consignatario", new Consignatario());
+            model.addAttribute("clientes", clientes);
             return "FormularioConsignatario";
         } else {
 
@@ -73,6 +89,7 @@ public class ConsignatarioController {
             Optional<Consignatario> consignatarioOp = response.getBody();
             Consignatario consignatario = consignatarioOp.get();
             model.addAttribute("consignatario", consignatario);
+            model.addAttribute("clientes", clientes);
         }
         return "FormularioConsignatario";
 
@@ -98,6 +115,7 @@ public class ConsignatarioController {
 
     @GetMapping("/EliminarConsignatario/{idConsignatario}")
     public String Delete(@PathVariable int idConsignatario) {
+       
         RestTemplate RestTemplate = new RestTemplate();
         String apiUrl = "http://localhost:8080/ConsignatarioApi/elimina/" + idConsignatario;
         ResponseEntity<Consignatario> response = RestTemplate.exchange(

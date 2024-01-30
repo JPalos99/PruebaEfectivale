@@ -35,14 +35,17 @@ public class ConsignatarioService {
     }
 
     public void agregar(Consignatario Consignatario) {
-        ServiceConsignatario.ConsignatarioAdd(Consignatario.isConsignatarioactivo(), Consignatario.getConsignatarionombre(), Consignatario.getConsignatariofechacreacion(), Consignatario.getConsignatariofechamodificacion());
+        ServiceConsignatario.ConsignatarioAdd(Consignatario.isConsignatarioactivo(), Consignatario.getConsignatarionombre(),Consignatario.getCliente().getClienteid());
     }
 
     public void actualizar(Consignatario Consignatario) {
-        ServiceConsignatario.ConsignatarioUpdate(Consignatario.getConsignatarioid(),Consignatario.isConsignatarioactivo(), Consignatario.getConsignatarionombre(), Consignatario.getConsignatariofechacreacion(), Consignatario.getConsignatariofechamodificacion());
+        ServiceConsignatario.ConsignatarioUpdate(Consignatario.getCliente().getClienteid(),Consignatario.getConsignatarioid(),Consignatario.isConsignatarioactivo(),Consignatario.getConsignatarionombre());
     }
 
     public void eliminar(int consignatarioid) {
-        ServiceConsignatario.ConsignatarioDelete(consignatarioid);
+        Optional<Consignatario> consignatario= ServiceConsignatario.findById(consignatarioid);
+        Consignatario consignatario1=consignatario.get();
+        System.out.println(consignatario1.getCliente().getClienteid());
+        ServiceConsignatario.ConsignatarioDelete(consignatarioid,consignatario1.getCliente().getClienteid());
     }
 }

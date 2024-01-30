@@ -19,22 +19,14 @@ public interface ServiceConsignatario extends JpaRepository<Consignatario, Integ
 
     @Procedure(name = "ConsignatarioAdd")
     void ConsignatarioAdd(
-            @Param(value = "clienteactivo")
-                    boolean consignatarioactivo, @Param(value = "clientenombre")
-                            String consignatarionombre, @Param(value = "clientefechacreacion")
-                                    Date consignatariofechacreacion, @Param(value = "clientefechamodificacion")
-                                            Date consignatariofechamodificacion);
+            @Param(value = "clienteactivo") boolean consignatarioactivo, @Param(value = "clientenombre") String consignatarionombre, @Param(value = "clienteid") int clienteid);
 
     @Procedure(name = "ConsignatarioUpdate")
     void ConsignatarioUpdate(
-            @Param(value = "consignatarioid")
-                    int consignatarioid, @Param(value = "clienteactivo")
-                            boolean consignatarioactivo, @Param(value = "clientenombre")
-                                    String consignatarionombre, @Param(value = "clientefechacreacion")
-                                            Date consignatariofechacreacion, @Param(value = "clientefechamodificacion")
-                                                    Date consignatariofechamodificacion);
+           @Param(value = "clienteid") int clienteid, @Param(value = "consignatarioid") int consignatarioid, @Param(value = "clienteactivo") boolean consignatarioactivo,@Param(value = "clientenombre") String consignatarionombre);
 
     @Procedure(name = "ConsignatarioDelete")
-    void ConsignatarioDelete(@Param("consignatarioid") int consignatarioid);
+
+    void ConsignatarioDelete(@Param("consignatarioid") int consignatarioid, @Param("clienteid") int clienteid);
 
 }

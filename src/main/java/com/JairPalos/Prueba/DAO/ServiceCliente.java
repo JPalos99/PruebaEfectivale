@@ -19,18 +19,16 @@ public interface ServiceCliente extends JpaRepository<Cliente, Integer> {
     @Procedure(name = "ClienteAdd")
     void ClienteAdd(
             @Param("clienteactivo") boolean clienteactivo,
-            @Param("clientenombre") String clientenombre,
-            @Param("clientefechacreacion") Date clientefechacreacion,
-            @Param("clientefechamodificacion") Date clientefechamodificacion
+            @Param("clientenombre") String clientenombre
+         
     );
 
     @Procedure(name = "ClienteUpdate")
     void ClienteUpdate(
             @Param("clienteid") int clienteid,
             @Param("clienteactivo") boolean clienteactivo,
-             @Param("clientenombre") String clientenombre,
-            @Param("clientefechacreacion") Date clientefechacreacion,
-            @Param("clientefechamodificacion") Date clientefechamodificacion
+             @Param("clientenombre") String clientenombre
+       
     );
 
     @Procedure(name = "ClienteDelete")
