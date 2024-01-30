@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" 
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+      layout:decorate="~{layout}">
+
+<head>
+    <title>Form Consignatario</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+          integrity="sha384-rbs5v8j1p8q8zf6QvKGzxytc8v25Mts5n0i9aZ4P37NqqA4IU8TOUnM2Hu7JPeZ" crossorigin="anonymous">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+
+        h3 {
+            color: #007bff;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        .btn-success:hover {
+            background-color: #218838;
+            border-color: #1e7e34;
+        }
+
+        /* Añadir estilo para la etiqueta de fecha */
+        label[for^="txtconsignatariofechacreacion"],
+        label[for^="txtconsignatariofechamodificacion"] {
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body layout:fragment="body">
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <h3 class="text-center">Datos del Consignatario</h3>
+                <form th:action="@{/Consignatario/form}" method="post" th:object="${consignatario}" enctype="multipart/form-data"
+                    onsubmit="return validateForm()">
+                    <div class="mb-3">
+                        <input type="hidden" th:field="*{consignatarioid}" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="txtconsignatarionombre" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" placeholder="Nombre" id="txtconsignatarionombre" name="consignatarionombre"
+                            th:field="*{consignatarionombre}" onkeypress="return sololetras(event, 'lblConsignatarioNombre', 'txtconsignatarionombre')" required />
+                        <label id="lblConsignatarioNombre"></label>
+                    </div>
+                    <div class="form-group">
+                        <label>Estado del Consignatario</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="estadoConsignatario" id="activo" value="true" th:field="*{consignatarioactivo}" required>
+                            <label class="form-check-label" for="activo">
+                                Activo
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="estadoConsignatario" id="inactivo" value="false" th:field="*{consignatarioactivo}" required>
+                            <label class="form-check-label" for="inactivo">
+                                Inactivo
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="txtconsignatariofechacreacion">Fecha de Creación</label>
+                        <input type="Date" class="form-control" id="txtconsignatariofechacreacion"
+                            name="consignatariofechacreacion" th:field="*{consignatariofechacreacion}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="txtconsignatariofechamodificacion">Fecha de Modificación</label>
+                        <input type="Date" class="form-control" id="txtconsignatariofechamodificacion"
+                            name="consignatariofechamodificacion" th:field="*{consignatariofechamodificacion}" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="txtcliente">Cliente</label>
+                        <select class="form-control" id="txtcliente" name="cliente.clienteid" th:field="*{cliente.clienteid}" required>
+                           
+                            <option th:each="cliente : ${clientes}" th:value="${cliente.clienteid}" th:text="${cliente.clientenombre}"></option> 
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-success">Guardar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function sololetras(e, lbl, txt) {
+            var letters = /^[A-Za-z]+$/;
+            var key = e.key;
+            if (key.match(letters)) {
+                document.getElementById(lbl).innerHTML = "";
+                $("#" + txt).css({'border': 'none', 'border-left': 'none', 'border-right': 'none'});
+                return true;
+            } else {
+                document.getElementById(lbl).innerHTML = "Solo Letras";
+                $("#" + lbl).css('color', 'red');
+                $("#" + txt).css({'border': 'solid red', 'border-left': 'solid red', 'border-right': 'solid red'});
+                return false;
+            }
+        }
+
+        function validateForm() {
+            var consignatarioNombre = $("#txtconsignatarionombre").val();
+
+            if (!consignatarioNombre.match(/^[A-Za-z]+$/)) {
+                $("#lblConsignatarioNombre").text("Por favor, ingrese solo letras.");
+                $("#lblConsignatarioNombre").css('color', 'red');
+                $("#txtconsignatarionombre").css({'border': 'solid red', 'border-left': 'solid red', 'border-right': 'solid red'});
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+
+</html>
