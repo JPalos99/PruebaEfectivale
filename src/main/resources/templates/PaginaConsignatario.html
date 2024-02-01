@@ -67,6 +67,7 @@
                             <th scope="col">nombre</th>
                             <th scope="col">Fecha de Nacimiento</th>
                             <th scope="col">Fecha de Ingreso</th>
+                            <th scope="col">Cliente</th>
                             <th scope="col">Actualizar</th>
                         </tr>
                     </thead>
@@ -81,7 +82,7 @@
                             <td th:text="${consignatario.consignatarionombre }"></td>
                             <td th:text="${consignatario.consignatariofechacreacion}"></td>
                             <td th:text="${consignatario.consignatariofechamodificacion}"></td>
-
+                            <td th:text="${consignatario.cliente.clientenombre}"></td>
                             <td>
                                 <a th:href="@{/Consignatario/form/{consignatarioid}(consignatarioid=${consignatario.consignatarioid})}" class="btn btn-warning">
                                     <i class="bi bi-pencil-fill"></i>
